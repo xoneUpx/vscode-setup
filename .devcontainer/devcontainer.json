@@ -9,7 +9,7 @@
   "_postAttachCommand": ["bash", "-i", "-c", "tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --authkey $(pass tailscle-auth-cli) --ssh && DOPPLER_TOKEN=$(pass doppler-cli) doppler secrets download -p test -c dev --no-file --format env"],
   "_postAttachCommand": ["bash", "-i", "-c", "tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --authkey $(pass tailscle-auth-cli) --ssh"],
   "_postCreateCommand": ["bash", "-i", "-c", "tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 --socket=/tmp/tailscaled.sock & tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --advertise-tags=tag:devcontainer --authkey $AUTH_KEY"],
-  "_postAttachCommand":  ".devcontainer/post-attach.sh",
+  "_postAttachCommand":  "git clone https://github.com/xoneUpx/dotfiles",
   "_features": {
       "./local-feature": {}
   },
