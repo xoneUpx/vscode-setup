@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+      "stateful.runme",
+      "vscodevim.vim",
+      "golang.Go",
+      "shan.code-settings-sync",
+      "signageos.signageos-vscode-sops",
+      "doppler.doppler-vscode",
+      "hashicorp.terraform"
+    ]
+}
