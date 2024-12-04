@@ -1,6 +1,6 @@
 {
   "name": "container-dev",
-  "_image": "mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:branch-main",
+  "image": "mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:branch-main",
   "_build": {
     "dockerfile": "Dockerfile"
   },
