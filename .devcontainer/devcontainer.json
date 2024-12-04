@@ -1,0 +1,73 @@
+{
+  "name": "container-dev",
+  "_image": "mcr.microsoft.com/vscode/devcontainers/repos/microsoft/vscode:branch-main",
+  "_build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": ["--env-file","${localWorkspaceFolder}/.devcontainer/.env"],
+  "_runArgs": ["--env-file","${localWorkspaceFolder}/.env"],
+  "_postAttachCommand": ["bash", "-i", "-c", "tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --authkey $(pass tailscle-auth-cli) --ssh && DOPPLER_TOKEN=$(pass doppler-cli) doppler secrets download -p test -c dev --no-file --format env"],
+  "_postAttachCommand": ["bash", "-i", "-c", "tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --authkey $(pass tailscle-auth-cli) --ssh"],
+  "_postCreateCommand": ["bash", "-i", "-c", "tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 --socket=/tmp/tailscaled.sock & tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh  --advertise-tags=tag:devcontainer --authkey $AUTH_KEY"],
+  "_postAttachCommand":  ".devcontainer/post-attach.sh",
+  "_features": {
+      "./local-feature": {}
+  },
+  "_features": {
+      "ghcr.io/tailscale/codespace/tailscale": {}
+  },
+  "_features": {
+      "ghcr.io/tailscale/codespace/tailscale": {},
+      "ghcr.io/itsmechlark/features/doppler:2": {
+          "version":"latest"
+      },
+      "ghcr.io/christophermacgown/devcontainer-features/direnv:1": {
+          "version":"latest"
+      },
+      "ghcr.io/eitsupi/devcontainer-features/nushell:0": {
+          "version":"latest"
+      },
+      "ghcr.io/dhoeric/features/google-cloud-cli:1": {
+          "version":"latest"
+      },
+      "ghcr.io/dhoeric/features/k9s:1": {
+          "version":"latest"
+      },
+      "ghcr.io/devcontainers/features/terraform:1": {
+        "version":"latest"
+      }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscodevim.vim"
+      ]
+    }
+  },
+  "_postStartCommand": "tailscaled --tun=userspace-networking --socks5-server=localhost:1055 --outbound-http-proxy-listen=localhost:1055 --socket /tmp/tailscaled.sock  &> /dev/null  & \n  sleep 5  \n  tailscale --socket /tmp/tailscaled.sock  up --accept-dns --ssh --authkey ${AUTH_KEY}",
+  "_postAttachCommand": "nohup bash -c '.devcontainer/post-setup.sh &'",
+  "_postAttachCommand": "bash -c '.devcontainer/post-setup.sh'",
+  "_postCreateCommand": { "1": "nohup bash -c '.devcontainer/post-setup.sh &'",
+    "2": "echo lol"},
+  "remoteUser": "archlinux",
+  "forwardPorts": [],
+  "workspaceFolder": "/workspace",
+  "remoteEnv": {
+    "PROJECT_FOLDER": "/workspace",
+    "GIT_AUTHOR_NAME": "${localEnv:GIT_AUTHOR_NAME}",
+    "GIT_AUTHOR_EMAIL": "${localEnv:GIT_AUTHOR_EMAIL}",
+    "GIT_COMMITTER_NAME": "${localEnv:GIT_COMMITTER_NAME}",
+    "GIT_COMMITTER_EMAIL": "${localEnv:GIT_COMMITTER_EMAIL}",
+    "_TS_AUTH_KEY": "${localEnv:TS_AUTH_KEY}",
+    "DOPPLER_TOKEN": "${localEnv:DOPPLER_TOKEN}"
+  },
+  "containerEnv": {
+    "PROJECT_FOLDER": "/workspace",
+    "GIT_AUTHOR_NAME": "${localEnv:GIT_AUTHOR_NAME}",
+    "GIT_AUTHOR_EMAIL": "${localEnv:GIT_AUTHOR_EMAIL}",
+    "GIT_COMMITTER_NAME": "${localEnv:GIT_COMMITTER_NAME}",
+    "GIT_COMMITTER_EMAIL": "${localEnv:GIT_COMMITTER_EMAIL}",
+    "_TS_AUTH_KEY": "${localEnv:TS_AUTH_KEY}",
+    "DOPPLER_TOKEN": "${localEnv:DOPPLER_TOKEN}"
+  }
+}
